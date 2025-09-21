@@ -22,6 +22,20 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback);
 }
 
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+
+  //Clear out old content if requested
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+
+  //Turning list into html
+  const htmlStrings = list.map(templateFn);
+
+  // Insert html into the parent
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+}
+
 
 
 export const CARTKEY = 'so-cart'
