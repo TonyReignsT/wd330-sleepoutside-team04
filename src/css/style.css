@@ -604,3 +604,113 @@ nav {
     border-color: #333; 
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+/*Wishlist*/
+
+.wishlist {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 0.5rem;      
+  margin-left: -5px;         
+}
+
+.wishlist .material-icons {
+  font-size: 24px;            
+  width: 24px;
+  height: 24px;
+  color: var(--tertiary-color);  
+  transition: color 0.2s ease;
+}
+
+.wishlist:hover .material-icons {
+  color: gray;
+}
+
+#wishlist-count {
+  position: absolute;
+  top: -5px;
+  right: -8px;                
+  background: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 6px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.wishlist a {
+  text-decoration: none;
+  color: inherit; 
+}
+/* Wishlist card similar to cart-card */
+.wishlist-items {
+  list-style: none;
+  padding: 0;
+}
+
+.wishlist-card {
+  display: grid;
+  grid-template-columns: 25% auto 20%;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.wishlist-card img {
+  width: 100%;
+  max-width: 100px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.wishlist-card .card__name {
+  font-size: 1em;
+  margin: 0;
+}
+
+.wishlist-card .card__color {
+  font-size: 0.9em;
+  color: var(--dark-grey);
+}
+
+.wishlist-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wishlist-buttons .move-to-cart,
+.wishlist-buttons .remove-wishlist {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #fff;
+}
+
+.wishlist-buttons .move-to-cart {
+  background-color: #2c7a7b;
+}
+
+.wishlist-buttons .move-to-cart:hover {
+  background-color: #285e61;
+  transform: translateY(-2px);
+}
+
+.wishlist-buttons .remove-wishlist {
+  background-color: #e53e3e;
+}
+
+.wishlist-buttons .remove-wishlist:hover {
+  background-color: #c53030;
+  transform: translateY(-2px);
+}

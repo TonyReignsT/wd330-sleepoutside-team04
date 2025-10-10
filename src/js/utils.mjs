@@ -1,5 +1,5 @@
 export const CARTKEY = 'so-cart'
-
+const WISHLISTKEY = 'so-wishlist'
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -61,6 +61,27 @@ export function updateCartBadge() {
   }
 }
 
+export function updateWishlistBadge() {
+  const wishlistItems = JSON.parse(localStorage.getItem(WISHLISTKEY)) || [];
+  const count = wishlistItems.reduce((total, item) => total + (item.qty || 1), 0);
+
+  const wishList = document.querySelector(".wishlistIcon");
+  let badge = wishList.querySelector(".wishlist-count");
+
+  if (count > 0) {
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.classList.add("wishlist-count");
+      wishList.appendChild(badge);
+    }
+    badge.textContent = count;
+  } else {
+    if (badge) {
+      badge.remove();
+    }
+  }
+}
+
 
 //W03 Team Activity
 export function renderWithTemplate(template, parentElement, data, callback) {
@@ -84,6 +105,7 @@ export async function loadHeaderFooter(){
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
   updateCartBadge();
+  updateWishlistBadge();
 }
 
 
@@ -132,6 +154,7 @@ export function removeAllAlerts() {
       try {
         main.removeChild(alert);
       } catch (e) {
+        Error(e);
       }
     }, animationDuration);
   });
