@@ -1,4 +1,5 @@
 import { alertMessage, CARTKEY, getLocalStorage, removeAllAlerts, setLocalStorage, updateCartBadge } from "./utils.mjs";
+import { renderWishlist } from './wishlist.js';
 
 
 export default class ProductDetails {
@@ -25,6 +26,8 @@ export default class ProductDetails {
         // Review the readings from this week on 'this' to understand why.
         document.getElementById('addToCart')
             .addEventListener('click', this.addProductToCart.bind(this));
+        document.getElementById('addToWishlist')
+            .addEventListener('click', this.addToWishlist.bind(this));  
 
         //updateCartBadge();
         this.attachSwatchListeners();
@@ -61,8 +64,25 @@ export default class ProductDetails {
             }, 500);
         }
     }
+   addToWishlist() {
+        const wishlist = getLocalStorage("so-wishlist") || [];
+        const existingProduct = wishlist.find(item => item.Id === this.product.Id && item.selectedColor.ColorName === this.selectedColor.ColorName);
 
+        if (!existingProduct) {
+            const productToAdd = {
+                ...this.product,
+                selectedColor: this.selectedColor,
+            };
+            wishlist.push(productToAdd);
+        }
 
+        setLocalStorage("so-wishlist", wishlist);
+
+    // Update panel immediately
+        renderWishlist();
+
+        alertMessage('Product added to wishlist', true, 'success', 3000);
+    }
     renderProductDetails() {
         
     const colorSwatchHTML = this.product.Colors.map(c => `
@@ -93,6 +113,7 @@ export default class ProductDetails {
 
         <div class="product-detail__add">
             <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
+            <button id="addToWishlist" class="wishlist-button" data-id="${this.product.Id}"  style="margin-top: 25px;" >Add to Wishlist ❤️</button>
         </div>
     `;
 }
@@ -108,12 +129,8 @@ attachSwatchListeners() {
 
         swatches.forEach(swatch => {
             swatch.addEventListener('click', () => {
-                console.log('Swatch clicked');
                 const colorDataString = swatch.getAttribute('data-color-data');
                 const selectedColorData = JSON.parse(colorDataString);
-                
-                console.log('Selected color data:', selectedColorData);
-
                 this.selectedColor = selectedColorData;
                 swatches.forEach(s => s.classList.remove('selected'));
                 swatch.classList.add('selected');
